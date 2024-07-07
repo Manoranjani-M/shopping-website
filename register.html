@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration and Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body{
+            background-image: url(bg.avif);
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid d-flex justify-content-center"> 
+        <form name="registerform"  action="login.html" onsubmit="return registerUser()" style="width: 400px;" class="m-5 p-5 bg-info was-validate">
+            <div class="ps-5">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            <div>
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            <div>
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <div>
+                <label for="confirmpassword" class="form-label">Confirm Password</label>
+                <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" required>
+            </div>
+            <div class="d-flex justify-content-center mt-3 pt-5">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+        </form>
+
+       
+       
+
+    <script>
+        // Function to register user
+        function registerUser() {
+            var username = document.getElementById('username').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var confirmpassword = document.getElementById('confirmpassword').value;
+
+            if (password !== confirmpassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            // Retrieve existing users from localStorage or initialize empty array
+            var users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // Check if email already exists
+            users.forEach(function(user) {
+                if (user.email === email) {
+                    alert("Email already exists. Please use another email.");
+                    return false;
+                }
+            });
+
+            // Create new user object
+            var newUser = {
+                username: username,
+                email: email,
+                password: password
+            };
+
+            // Push new user object into users array
+            users.push(newUser);
+
+            // Store updated users array back into localStorage
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert("Registration successful!");
+            document.getElementById('loginForm').style.display = 'block';
+            return false; // Form submission success
+        }
+
+       
+    </script>
+</body>
+</html>
